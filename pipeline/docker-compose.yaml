@@ -1,0 +1,26 @@
+services:
+  pgdatabase:
+    image: postgres:18
+    network_mode: host
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "ny_taxi"
+    volumes:
+      - "ny_taxi_postgres_data:/var/lib/postgresql"
+    # host network: Postgres listens directly on host port 5432 (no "ports:" needed)
+
+  pgadmin:
+    image: dpage/pgadmin4
+    network_mode: host
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "root"
+      # host network: make pgAdmin listen directly on 8085 (instead of 8085:80 mapping)
+      PGADMIN_LISTEN_PORT: "8085"
+    volumes:
+      - "pgadmin_data:/var/lib/pgadmin"
+
+volumes:
+  ny_taxi_postgres_data:
+  pgadmin_data:
